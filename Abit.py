@@ -14,9 +14,9 @@ def get_hash(filepath, algorithm):
     return hasher.hexdigest()
 
 # Creates a file and writes absolute path together with hash
-def create_file_hashes(output_file, algorithm, root_dir='.'):
+def create_file_hashes(output_file, algorithm, starting_dir, root_dir='.'):
     hashes = {}
-    for root, dir, files in tqdm(os.walk('.'), desc="Scanning directories"):
+    for root, dir, files in tqdm(os.walk(starting_dir), desc="Scanning directories"):
         for file in files:
             filepath = os.path.join(root, file)
             hash_value = get_hash(filepath, algorithm)
@@ -27,7 +27,7 @@ def create_file_hashes(output_file, algorithm, root_dir='.'):
             f.write(f'{k}\t{v}\n')
 
 # Reads the input file for hashes and compares against target directory
-def verify_file_hashes(input_file, algorithm):
+def verify_file_hashes(input_file, algorithm, starting_dir):
     hashes = {}
     with open(input_file) as f:
         for line in f:
@@ -35,7 +35,7 @@ def verify_file_hashes(input_file, algorithm):
             filepath, hash_value = parts[0], parts[1]
             hashes[filepath] = hash_value
     
-    for root, dir, files in tqdm(os.walk('.'), desc="Verifying hashes"):
+    for root, dir, files in tqdm(os.walk(starting_dir), desc="Verifying hashes"):
         for file in files:
             filepath = os.path.join(root, file)
             if filepath in hashes:
@@ -43,7 +43,7 @@ def verify_file_hashes(input_file, algorithm):
                 if str(get_hash_from_file) != str(hashes[filepath]).rstrip():
                     print(f'Mismatch for {filepath}: calculated hash={get_hash_from_file} but stored hash={hashes[filepath]}')
             else:
-                print(f'File not found in input file, recommend to create new file for inculsion: {filepath}')
+                print(f'File not found in input file, recommend to create new file for inclusion: {filepath}')
 
 def main():
     print("A-Bit version:", __version__.__version__)
@@ -76,9 +76,9 @@ def main():
     if args.create:
         target_out = algorithm_name + "_" +args.output
         output_filename = os.path.join(os.getcwd(), target_out) if args.output else None
-        create_file_hashes(output_filename, algorithm_name)
+        create_file_hashes(output_filename, algorithm_name, args.starting_dir)
     elif args.verify:
-        verify_file_hashes(input_filename, algorithm_name)
+        verify_file_hashes(input_filename, algorithm_name, args.starting_dir)
 
     print("All done!")
         

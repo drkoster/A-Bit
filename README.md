@@ -18,17 +18,18 @@ The script supports the following arguments:
       - --output                : Specifies the path of the output file where hashes will be written or read from.
       - --help                  : Print help description
 
-Then execute the script by running: `python Abit.py [--create | --verify] [--algorithm md5|sha1|sha256|sha3_256] [--output output_filename]`
+Then execute the script by running: `python Abit.py [-h] [--create] [--verify] [--algorithm {md5,sha1,sha256,sha3_256}] [--input INPUT] [--output OUTPUT] [--starting_dir STARTING_DIR]`
 
 ## Todo
 The following features might be developed, on a rainy day, someday :)
-- [ ] Target directory as argument
+- [x] Target directory as argument
 - [ ] GUI version
-- [ ] Option to use only filenames, making paths absolete 
+- [ ] Option to use only filenames, making paths obsolete 
 - [ ] Write results to log file
 - [ ] Threading for SSD's
 - [x] Improved arguments error checking and help
 - [ ] Config file for default behaviour
+- [ ] Test and make compatible linux/ubuntu
 
 ## Authors
 Dennis Koster 
@@ -37,6 +38,10 @@ Dennis Koster
 Inspired by FreeFileSync - https://freefilesync.org/
 
 ## Changelog
+
+## [0.0.4] Target directory argument
+- Added argument --starting_dir to specify a base directory where to start hashing from
+- Readme fixes
 
 ## [0.0.3] Minor improvements
 - Added better argument handling and description
