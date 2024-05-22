@@ -23,6 +23,9 @@ Dennis K.
 
 ## Acknowledgments
 
-## License
 
-This project is licensed under the [NAME HERE] License - see the LICENSE.md file for details
+## Changelog
+## [0.0.1a] Initial working version
+
+## License
+This project is licensed under the Apache License 2.0 - see the LICENSE.md file for details
