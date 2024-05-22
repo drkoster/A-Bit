@@ -1,31 +1,22 @@
 import os
-import sys
+#import sys
 import hashlib
 import argparse
 import __version__
-from pathlib import Path
+#from pathlib import Path
 from tqdm import tqdm
 
 # Buffered file reader method
 def get_hash(filepath, algorithm):
     with open(filepath, 'rb') as f:
         hasher = getattr(hashlib, algorithm)()
-        for chunk in iter(lambda: f.read(4096), b''):
-        #while chunk := buffer.read(8192):  # Read in chunks of size 8KB
+        for chunk in iter(lambda: f.read(8192), b''):
             hasher.update(chunk)
     return hasher.hexdigest()
 
-def verify_hash(filepath, hash_value, algorithm):
-    with open(filepath, 'rb') as f:
-        hasher = getattr(hashlib, algorithm)()
-        buffer = f.buffer  # Get the buffered reader
-        while chunk := buffer.read(8192):  # Read in chunks of size 8KB
-            hasher.update(chunk)   
-    return hash.hexdigest() == hash_value 
-
+# Creates a file and writes absolute path together with hash
 def create_file_hashes(output_file, algorithm, root_dir='.'):
     hashes = {}
-    #for root, dirs, files in os.walk(Path(root_dir)):
     for root, dir, files in tqdm(os.walk('.'), desc="Scanning directories"):
         for file in files:
             filepath = os.path.join(root, file)
@@ -36,6 +27,7 @@ def create_file_hashes(output_file, algorithm, root_dir='.'):
         for k, v in sorted(hashes.items()):
             f.write(f'{k}\t{v}\n')
 
+# Reads the input file for hashes and compares against target directory
 def verify_file_hashes(input_file, algorithm):
     hashes = {}
     with open(input_file) as f:
@@ -44,7 +36,6 @@ def verify_file_hashes(input_file, algorithm):
             filepath, hash_value = parts[0], parts[1]
             hashes[filepath] = hash_value
     
-    #for root, dirs, files in os.walk(Path('.')):
     for root, dir, files in tqdm(os.walk('.'), desc="Verifying hashes"):
         for file in files:
             filepath = os.path.join(root, file)
@@ -76,8 +67,7 @@ def main():
     output_filename = os.path.join(os.getcwd(), args.output) if args.output else None
 
     if args.create:
-        hashes = create_file_hashes(output_filename, algorithm_name)
-        
+        create_file_hashes(output_filename, algorithm_name)
     elif args.verify:
         verify_file_hashes(input_filename, algorithm_name)
 

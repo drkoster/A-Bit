@@ -14,17 +14,33 @@ The script supports the following arguments:
       - --create                : Creates hashes for files and writes them into the specified output file.
       - --verify                : Verifies hashes of files against the ones written in the specified output file.
       - --algorithm             : Specify the hash algorithm to use (default: md5). Options are 'md5', 'sha1', 'sha256', and 'sha3_256'.
-      - --output                 : Specifies the path of the output file where hashes will be written or read from.
+      - --input                 : Specify the file that contains hashes and filepaths that you wish to verify
+      - --output                : Specifies the path of the output file where hashes will be written or read from.
 
 Then execute the script by running: `python Abit.py [--create | --verify] [--algorithm md5|sha1|sha256|sha3_256] [--output output_filename]`
 
+## Todo
+The following features might be developed, on a rainy day, someday :)
+- [ ] Target directory as argument
+- [ ] GUI version
+- [ ] Option to use only filenames, making paths absolete 
+- [ ] Write results to log file
+- [ ] Threading for SSD's
+- [ ] Improved arguments error checking and help
+- [ ] Config file for default behaviour
+
 ## Authors
-Dennis K. 
+Dennis Koster 
 
 ## Acknowledgments
-
+Inspired by FreeFileSync - https://freefilesync.org/
 
 ## Changelog
+
+## [0.0.2] Creature comforts
+- Added Todo's to the readme
+- Code cleanup/unused imports
+
 ## [0.0.1a] Initial working version
 
 ## License
