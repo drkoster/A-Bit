@@ -2,7 +2,7 @@
 Detect file corruption and bitrot
 
 ## Description
-Luxuries like ZFS or BTRFS are not always available. Therefore as an excercise I wrote a python script that will hash all files on disk and save the path with hash to a seperate file. This file can be included onto the same media (CD, DVD or USB drive) or stored somewhere else for later verifying if the contents are still the same. 
+Luxuries like ZFS or BTRFS are not always available. Therefore as an excercise I wrote a python script that will hash files on disk and save the filepath with hash to a seperate file. This file can be included onto the same media (CD, DVD or USB drive) or stored somewhere else for later verifying if the contents are still the same. Easy tool to do bulk hashing and verification.
 
 The output filename will contain the chosen hash algorithm to be given when performing verification.
 
@@ -16,20 +16,23 @@ The script supports the following arguments:
       - --algorithm             : Specify the hash algorithm to use (default: md5). Options are 'md5', 'sha1', 'sha256', and 'sha3_256'.
       - --input                 : Specify the file that contains hashes and filepaths that you wish to verify
       - --output                : Specifies the path of the output file where hashes will be written or read from.
+      - --log_file              : Optional argument with --verify to safe results to logfile
+      - --starting_dir          : The base directory to work from, includes subdirectories
       - --help                  : Print help description
 
-Then execute the script by running: `python Abit.py [-h] [--create] [--verify] [--algorithm {md5,sha1,sha256,sha3_256}] [--input INPUT] [--output OUTPUT] [--starting_dir STARTING_DIR]`
+Then execute the script by running: `python Abit.py [-h] [--create] [--verify] [--algorithm {md5,sha1,sha256,sha3_256}] [--input INPUT] [--output OUTPUT] [--log_file LOG_FILE] [--starting_dir STARTING_DIR]`
 
 ## Todo
 The following features might be developed, on a rainy day, someday :)
 - [x] Target directory as argument
 - [ ] GUI version
 - [ ] Option to use only filenames, making paths obsolete 
-- [ ] Write results to log file
+- [x] Write results to log file
 - [ ] Threading for SSD's
 - [x] Improved arguments error checking and help
 - [ ] Config file for default behaviour
 - [ ] Test and make compatible linux/ubuntu
+- [ ] Hash files against other files instead of hashes
 
 ## Authors
 Dennis Koster 
@@ -38,6 +41,9 @@ Dennis Koster
 Inspired by FreeFileSync - https://freefilesync.org/
 
 ## Changelog
+
+## [0.0.5] Log to file
+- Added function/argument to log verification results to file. Allows for shutdown after long verification sessions.
 
 ## [0.0.4] Target directory argument
 - Added argument --starting_dir to specify a base directory where to start hashing from

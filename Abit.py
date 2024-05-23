@@ -2,8 +2,13 @@ import os
 import sys
 import hashlib
 import argparse
+import logging
 import __version__
+from datetime import datetime
 from tqdm import tqdm
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
 # Buffered file reader method
 def get_hash(filepath, algorithm):
@@ -27,23 +32,29 @@ def create_file_hashes(output_file, algorithm, starting_dir, root_dir='.'):
             f.write(f'{k}\t{v}\n')
 
 # Reads the input file for hashes and compares against target directory
-def verify_file_hashes(input_file, algorithm, starting_dir):
+def verify_file_hashes(input_file, algorithm, args):
     hashes = {}
     with open(input_file) as f:
         for line in f:
             parts = line.split('\t')
             filepath, hash_value = parts[0], parts[1]
             hashes[filepath] = hash_value
-    
-    for root, dir, files in tqdm(os.walk(starting_dir), desc="Verifying hashes"):
+    if args.log_file:
+        logging.basicConfig(filename=args.log_file, encoding='utf-8', format='%(message)s', level=logging.INFO)
+        logger.info("Scan performed on: "+ datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
+        logger.info("Algorithm used: "+args.algorithm)
+
+    for root, dir, files in tqdm(os.walk(args.starting_dir), desc="Verifying hashes"):
         for file in files:
             filepath = os.path.join(root, file)
             if filepath in hashes:
                 get_hash_from_file = get_hash(filepath, algorithm)
                 if str(get_hash_from_file) != str(hashes[filepath]).rstrip():
+                    logger.error(f'Mismatch for {filepath}: calculated hash={get_hash_from_file} but stored hash={hashes[filepath]}')
                     print(f'Mismatch for {filepath}: calculated hash={get_hash_from_file} but stored hash={hashes[filepath]}')
             else:
-                print(f'File not found in input file, recommend to create new file for inclusion: {filepath}')
+                logger.info(f'File not found in input file, recommend to use --create for inclusion: {filepath}')
+                print(f'File not found in input file, recommend to use --create for inclusion: {filepath}')
 
 def main():
     print("A-Bit version:", __version__.__version__)
@@ -53,6 +64,7 @@ def main():
     parser.add_argument("--algorithm", type=str, default='md5', choices=['md5', 'sha1', 'sha256', 'sha3_256'], help="Hash algorithm to use (default: md5)")
     parser.add_argument("--input", type=str, help="Input file containing hashes for verification")
     parser.add_argument("--output", type=str, default='hashes.out', help="Output file path or leave empty to print results (default: hashes.out)")
+    parser.add_argument("--log_file", type=str, help="Optional argument, write verify results to logfile")
     parser.add_argument("--starting_dir", type=str, default='.', help="The base directory to work from, includes subdirectories (default: .)")
 
     args = parser.parse_args()
@@ -78,7 +90,7 @@ def main():
         output_filename = os.path.join(os.getcwd(), target_out) if args.output else None
         create_file_hashes(output_filename, algorithm_name, args.starting_dir)
     elif args.verify:
-        verify_file_hashes(input_filename, algorithm_name, args.starting_dir)
+        verify_file_hashes(input_filename, algorithm_name, args)
 
     print("All done!")
         
