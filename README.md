@@ -8,6 +8,7 @@ The output filename will contain the chosen hash algorithm to be given when perf
 
 ## Installation
 Included is a requirements file for installation: `pip install -r requirements.txt`
+alternatively use the portable package described below
 
 ## PyInstaller
 A complete package is available for easier use without requiring installing modules.
@@ -37,7 +38,7 @@ The following features might be developed, on a rainy day, someday :)
 - [ ] Config file for default behaviour
 - [ ] Test and make compatible linux/ubuntu
 - [ ] Hash files against other files instead of hashes
-- [ ] PyInstaller version in repository
+- [x] PyInstaller version in repository
 
 ## Authors
 Dennis Koster 
@@ -46,6 +47,9 @@ Dennis Koster
 Inspired by FreeFileSync - https://freefilesync.org/
 
 ## Changelog
+
+## [1.0.0] First release
+- Portable one click version in dist directory
 
 ## [0.0.5] Log to file
 - Added function/argument to log verification results to file. Allows for shutdown after long verification sessions.
