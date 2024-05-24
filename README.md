@@ -10,15 +10,15 @@ The output filename will contain the chosen hash algorithm to be given when perf
 Included is a requirements file for installation: `pip install -r requirements.txt`
 
 ## Usage
-The script supports the following arguments:
-      - --create                : Creates hashes for files and writes them into the specified output file.
-      - --verify                : Verifies hashes of files against the ones written in the specified output file.
-      - --algorithm             : Specify the hash algorithm to use (default: md5). Options are 'md5', 'sha1', 'sha256', and 'sha3_256'.
-      - --input                 : Specify the file that contains hashes and filepaths that you wish to verify
-      - --output                : Specifies the path of the output file where hashes will be written or read from.
-      - --log_file              : Optional argument with --verify to safe results to logfile
-      - --starting_dir          : The base directory to work from, includes subdirectories
-      - --help                  : Print help description
+The script supports the following arguments:<br>
+      - --create                : Creates hashes for files and writes them into the specified output file.<br>
+      - --verify                : Verifies hashes of files against the ones written in the specified output file.<br>
+      - --algorithm             : Specify the hash algorithm to use (default: md5). Options are 'md5', 'sha1', 'sha256', and 'sha3_256'.<br>
+      - --input                 : Specify the file that contains hashes and filepaths that you wish to verify.<br>
+      - --output                : Specifies the path of the output file where hashes will be written or read from.<br>
+      - --log_file              : Optional argument with --verify to safe results to logfile.<br>
+      - --starting_dir          : The base directory to work from, includes subdirectories.<br>
+      - --help                  : Print help description.<br>
 
 Then execute the script by running: `python Abit.py [-h] [--create] [--verify] [--algorithm {md5,sha1,sha256,sha3_256}] [--input INPUT] [--output OUTPUT] [--log_file LOG_FILE] [--starting_dir STARTING_DIR]`
 
@@ -33,6 +33,7 @@ The following features might be developed, on a rainy day, someday :)
 - [ ] Config file for default behaviour
 - [ ] Test and make compatible linux/ubuntu
 - [ ] Hash files against other files instead of hashes
+- [ ] PyInstaller version in repository
 
 ## Authors
 Dennis Koster 
