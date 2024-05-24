@@ -9,6 +9,10 @@ The output filename will contain the chosen hash algorithm to be given when perf
 ## Installation
 Included is a requirements file for installation: `pip install -r requirements.txt`
 
+## PyInstaller
+A complete package is available for easier use without requiring installing modules.
+Inside the `dist` directory you can find the latest portable application. Copy it somewhere on your pc and follow the usage section below. 
+
 ## Usage
 The script supports the following arguments:<br>
       - --create                : Creates hashes for files and writes them into the specified output file.<br>
