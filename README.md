@@ -14,6 +14,9 @@ alternatively use the portable package described below
 A complete package is available for easier use without requiring installing modules.
 Inside the `dist` directory you can find the latest portable application. Copy it somewhere on your pc and follow the usage section below. 
 
+To use and replicate the package in the dist directory, execute:
+'pyinstaller .\Abit.py --onefile'
+
 ## Usage
 The script supports the following arguments:<br>
       - --create                : Creates hashes for files and writes them into the specified output file.<br>
