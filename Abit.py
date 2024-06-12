@@ -4,8 +4,11 @@ import hashlib
 import argparse
 import logging
 import __version__
+
 from datetime import datetime
 from tqdm import tqdm
+
+import ui
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
