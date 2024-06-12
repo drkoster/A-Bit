@@ -8,7 +8,11 @@ import __version__
 from datetime import datetime
 from tqdm import tqdm
 
-import ui
+""" Abit.py
+    Author: Dennis Koster
+    Console version of A-Bit. Allows for creation and verification of file hashes from a hash file, akin to md5 files
+    Run with python .\Abit.py --help|-h for console argument help.
+ """
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)

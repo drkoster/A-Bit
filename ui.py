@@ -1,8 +1,16 @@
 import sys
+import __version__
 
 from PyQt5.QtCore import QSize, QMetaObject,QCoreApplication, QRect
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QApplication, QPushButton, QVBoxLayout, QWidget, QLabel, QLineEdit, QPlainTextEdit, QMainWindow
+
+""" ui.py
+    Author: Dennis Koster
+    Ui implementation for A-Bit create with qt-designer
+
+    To run: python .\ui.py
+"""
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -20,7 +28,7 @@ class Abit_Dialog(object):
         self.button_create.setGeometry(QRect(60, 360, 121, 31))
         self.label_version = QLabel(Dialog)
         self.label_version.setObjectName(u"label_version")
-        self.label_version.setGeometry(QRect(10, 490, 47, 14))
+        self.label_version.setGeometry(QRect(10, 490, 131, 16))
         self.label_source = QLabel(Dialog)
         self.label_source.setObjectName(u"label_source")
         self.label_source.setGeometry(QRect(20, 30, 47, 14))
@@ -43,23 +51,22 @@ class Abit_Dialog(object):
         self.label_status = QLabel(Dialog)
         self.label_status.setObjectName(u"label_status")
         self.label_status.setGeometry(QRect(460, 30, 47, 14))
-
         self.retranslateUi(Dialog)
 
         QMetaObject.connectSlotsByName(Dialog)
-    # setupUi
+
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"A-Bit", None))
         self.button_create.setText(QCoreApplication.translate("Dialog", u"Create", None))
-        self.label_version.setText(QCoreApplication.translate("Dialog", u"Version: ", None))
+        self.label_version.setText(QCoreApplication.translate("Dialog", u"Version: "+__version__.__version__, None))
         self.label_source.setText(QCoreApplication.translate("Dialog", u"Source:", None))
         self.label_target.setText(QCoreApplication.translate("Dialog", u"Target:", None))
         self.lineEdit_target.setPlaceholderText(QCoreApplication.translate("Dialog", u"Select directory or hash file", None))
         self.lineEdit_source.setPlaceholderText(QCoreApplication.translate("Dialog", u"Source directory to create or verify hashes for", None))
         self.button_verify.setText(QCoreApplication.translate("Dialog", u"Verify", None))
         self.label_status.setText(QCoreApplication.translate("Dialog", u"Status", None))
-    # retranslateUi
+
 
 def main():
     abitApp = QApplication([])
