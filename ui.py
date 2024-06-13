@@ -6,13 +6,13 @@ from subprocess import Popen, PIPE
 
 from PyQt5.QtCore import QSize, QMetaObject,QCoreApplication, QRect
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QApplication, QPushButton, QVBoxLayout, QWidget, QLabel, QLineEdit, QPlainTextEdit, QMainWindow
+from PyQt5.QtWidgets import QApplication, QPushButton, QVBoxLayout, QWidget, QLabel, QLineEdit, QPlainTextEdit, QMainWindow, QMessageBox
 
 
 #   ui.py
 #   Author: Dennis Koster
 #   Ui implementation for A-Bit create with qt-designer
-#
+#   Its an argument wrapper for the Abit.py application showing output and results in a textDialog
 #   To run: python .\ui.py 
 
 class MainWindow(QMainWindow):
@@ -57,6 +57,7 @@ class Abit_Dialog(object):
         self.retranslateUi(Dialog)
 
         self.button_create.clicked.connect(self.createButtonHandler)
+        self.button_verify.clicked.connect(self.verifyButtonHandler)
 
         QMetaObject.connectSlotsByName(Dialog)
 
@@ -72,24 +73,76 @@ class Abit_Dialog(object):
         self.button_verify.setText(QCoreApplication.translate("Dialog", u"Verify", None))
         self.label_status.setText(QCoreApplication.translate("Dialog", u"Status", None))
 
+
     def createButtonHandler(self):
-        p = subprocess.Popen(["python", "Abit.py", "-h"], stdout=PIPE, bufsize=1)
-        #p = Popen(["python Abit.py", "-h"], stdout=PIPE, bufsize=1)
+        self.buildCreateArguments()
+
+
+    def verifyButtonHandler(self):
+        self.buildVerifyArguments()
+
+
+    # first build arguments list, then call subprocess
+    def startAbit(self, arguments):
+        p = subprocess.Popen(arguments, stdout=PIPE, bufsize=10)
         with p.stdout:
             for line in iter(p.stdout.readline, b''):
                 print(line)
                 self.plainResult.appendPlainText(line.decode("utf-8"))
-        p.wait() # wait for the subprocess to exit
+        p.wait()
 
+
+    # Creates arguments list to call Abit.py for creating hash file
+    def buildCreateArguments(self):
+        arguments = "python Abit.py --create"
+        source = self.lineEdit_source.text()
+        if source == "":
+            self.showWarningDialog("Please select source directory")
+            return
+        
+        arguments = arguments+(" --starting_dir "+source)
+
+        target = self.lineEdit_target.text()
+        if target == "":
+            self.showWarningDialog("Please specify target file")
+            return
+
+        arguments=arguments+(" --output "+target)
+        print(arguments)
+        self.startAbit(arguments)
+        
+
+    # Creates arguments list to call Abit.py for verification
+    def buildVerifyArguments(self):
+        arguments = ["python", "Abit.py", "--verify"]
+        source = self.lineEdit_source.text()
+        if source == "":
+            self.showWarningDialog("Please select source directory")
+            return
+        
+        arguments = arguments+(" --starting_dir "+source)
+
+        target = self.lineEdit_target.text()
+        if target == "":
+            self.showWarningDialog("Please specify target file or directory")
+            return
+
+        arguments=arguments+(" --output "+target)
+        self.startAbit(arguments)
+
+
+    def showWarningDialog(self, message):
+        warningDialog = QMessageBox()
+        warningDialog.setWindowTitle("Warning")
+        warningDialog.setText(message)
+        warningDialog.setIcon(QMessageBox.Icon.Warning)
+        warningDialog.exec()
 
 def main():
     abitApp = QApplication([])
     abitWindow = MainWindow()
-    abitWindow.show()
-    
-    
+    abitWindow.show()    
     sys.exit(abitApp.exec())
-
 
 if __name__ == "__main__":
     main()
