@@ -39,6 +39,7 @@ The following features might be developed, on a rainy day, someday :)
 - [ ] Test and make compatible linux/ubuntu
 - [ ] Hash files against other files instead of hashes
 - [x] PyInstaller version in repository
+- [ ] Better handling of hash file creation path handling
 
 ## Authors
 Dennis Koster 
@@ -47,6 +48,9 @@ Dennis Koster
 Inspired by FreeFileSync - https://freefilesync.org/
 
 ## Changelog
+
+## [1.1.0] UI version now available
+- Introduced UI wrapper for console. 
 
 ## [1.0.0] First release
 - Portable one click version in dist directory

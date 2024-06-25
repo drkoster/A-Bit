@@ -5,6 +5,7 @@ import argparse
 import logging
 import __version__
 
+from pathlib import Path
 from datetime import datetime
 from tqdm import tqdm
 
@@ -34,7 +35,8 @@ def create_file_hashes(output_file, algorithm, starting_dir, root_dir='.'):
             hash_value = get_hash(filepath, algorithm)
             hashes[filepath] = hash_value
     
-    with open(output_file, 'w') as f:
+    with open(output_file, 'w+') as f:
+    #with output_file.open() as f:
         for k, v in sorted(hashes.items()):
             f.write(f'{k}\t{v}\n')
 
@@ -92,10 +94,16 @@ def main():
     algorithm_name = args.algorithm
     input_filename = args.input
 
+    #TODO better align path selection for hash file creation with ui
     if args.create:
-        target_out = algorithm_name + "_" +args.output
-        output_filename = os.path.join(os.getcwd(), target_out) if args.output else None
-        create_file_hashes(output_filename, algorithm_name, args.starting_dir)
+        if (args.output[-4:] == ".md5"):
+            output_filename = args.output
+        else:
+            target_out = algorithm_name + "_" +args.output
+            output_filename = os.path.join(os.getcwd(), target_out) if args.output else None
+        print("Output file: "+output_filename)
+        output_path = Path(output_filename)
+        create_file_hashes(output_path, algorithm_name, args.starting_dir)
     elif args.verify:
         verify_file_hashes(input_filename, algorithm_name, args)
 
