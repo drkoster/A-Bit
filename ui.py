@@ -97,7 +97,7 @@ class Abit_Dialog(object):
             if(self.lineEdit_target.text()[-1] != "/"):
                 self.lineEdit_target.setText(self.lineEdit_target.text()+"/")
             now = datetime.now()
-            date_name = now.strftime("%d-%m-%Y_%H:%M:%S")
+            date_name = now.strftime("%d%m%Y_%H%M%S")
             date_name = date_name+".md5"
             self.lineEdit_target.setText(self.lineEdit_target.text()+date_name)
             

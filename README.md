@@ -30,7 +30,7 @@ Then execute the script by running: `python Abit.py [-h] [--create] [--verify] [
 ## Todo
 The following features might be developed, on a rainy day, someday :)
 - [x] Target directory as argument
-- [ ] GUI version
+- [x] GUI version
 - [ ] Option to use only filenames, making paths obsolete 
 - [x] Write results to log file
 - [ ] Threading for SSD's
